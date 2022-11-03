@@ -327,7 +327,7 @@ function delete_user() {
     table_info.then (
         function (value) {
             console.log(value)
-            // window.location.href = "./login.html"
+            window.location.href = "./login.html"
         },
         function (error) {
             console.log(error)

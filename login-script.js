@@ -21,4 +21,3 @@ function auth () {
 }
 
 window.auth = auth;
-
