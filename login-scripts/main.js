@@ -15,7 +15,7 @@
   \*********************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("const { GetItemCommand } = __webpack_require__(/*! @aws-sdk/client-dynamodb */ \"./node_modules/@aws-sdk/client-dynamodb/dist-es/index.js\")\r\nconst { client } = __webpack_require__(/*! ./unauth-client.js */ \"./unauth-client.js\")\r\n\r\nexports.get_item = async (table, key) => {\r\n    const params = {\r\n      TableName: table,\r\n      Key: key\r\n    };\r\n\r\n    try {\r\n      console.log(\"Successfully retrieved item from '\" + table + \"'\")\r\n      const data = await client.send(new GetItemCommand(params));\r\n      return data;  \r\n    } catch (error) {\r\n      console.log(error)\r\n    }\r\n  }\r\n  \n\n//# sourceURL=webpack://proposal/./get-item.js?");
+eval("const { GetItemCommand } = __webpack_require__(/*! @aws-sdk/client-dynamodb */ \"./node_modules/@aws-sdk/client-dynamodb/dist-es/index.js\")\r\nconst { client } = __webpack_require__(/*! ./unauth-client.js */ \"./unauth-client.js\")\r\n\r\nexports.get_item = async (table, key) => {\r\n    const params = {\r\n      TableName: table,\r\n      Key: key\r\n    };\r\n\r\n    try {\r\n      const data = await client.send(new GetItemCommand(params));\r\n      return data;  \r\n    } catch (error) {\r\n      console.log(error)\r\n    }\r\n  }\r\n  \n\n//# sourceURL=webpack://proposal/./get-item.js?");
 
 /***/ }),
 

@@ -1,6 +1,7 @@
 const { get_item } = require("./get-item.js")
 const { put_item } = require("./write-item.js")
 const { update_item } = require("./update-item.js")
+const { delete_item } = require("./delete-item.js")
 
 // helper function to format units of time from the "Date" object
 
@@ -208,7 +209,7 @@ function verify_timecard_status() {
                 if (value.Item.breakin_hour != undefined && value.Item.breakout_hour == undefined) {
                     sub_panel.innerHTML = "Took your break at " + value.Item.breakin_hour.S
                     console.log("second if", sub_panel.innerHTML)
-                } else if (value.Item.breakin_hour != undefined && value.Item.breakout_hour != undefined) {
+                } else if (value.Item.breakin_hour != undefined && value.Item.breakout_hour != undefined && value.Item.clockout_hour == undefined) {
                     sub_panel.innerHTML = "Welcome back " + document.getElementById("emp-name").innerHTML + "!"
                     console.log("third if", sub_panel.innerHTML)
                 } else if (value.Item.clockout_hour != undefined) {                    
@@ -243,14 +244,23 @@ function load_workweek_info() {
     
     table_info.then (
         function (value) {
+            // console.log(value)
             // this function will create time variables for the rate to be calculated
             if (value.Item.clockin_hour != undefined && value.Item.clockout_hour != undefined) {
                 const hour_in = +value.Item.clockin_hour.S
                 const hour_out = +value.Item.clockout_hour.S
+                const hour_breakin = +value.Item.breakin_hour.S
+                const hour_breakout = +value.Item.breakout_hour.S
+                const min_breakin = +value.Item.breakin_min.S / 60
+                const min_breakout = +value.Item.breakout_min.S / 60
                 const min_in = +value.Item.clockin_min.S / 60
                 const min_out = +value.Item.clockout_min.S / 60 
+
+                console.log(hour_breakin, min_breakin, hour_breakout, min_breakout)
+
+                const break_total = (hour_breakout + min_breakout) - (hour_breakin + min_breakin)
     
-                today_hours = (hour_out + min_out) - (hour_in + min_in)
+                today_hours = (hour_out + min_out) - (hour_in + min_in) - break_total
             }
         },
         function (error) {
@@ -275,21 +285,7 @@ function load_workweek_info() {
         }
     )
 
-    // const week_start_date = date.getDate() + date.getDay()
-
-    let start = date.getDate() - date.getDay()
-    let end = date.getDate() + (6 - date.getDay())
-
-    if (start < 0) {
-        let temp = date
-        temp.getMonth() = temp.getMonth() - 1
-        temp.getDate() = 
-        format_date(temp)
-    }
-
     week_info.innerHTML = f_date.month + " " + (date.getDate() - date.getDay()) + " - " + (date.getDate() + (6 - date.getDay()))
-
-
 }
 
 // function to load employee information, retrieves it from DynamoDB for display
@@ -325,6 +321,21 @@ function load_everything() {
     verify_timecard_status();
 }
 
+function delete_user() {
+    const table_info = delete_item(table = "login-info", key = { username: { S: sessionStorage.getItem("username") } })
+
+    table_info.then (
+        function (value) {
+            console.log(value)
+            // window.location.href = "./login.html"
+        },
+        function (error) {
+            console.log(error)
+        }
+    )
+}
+
+window.delete_user = delete_user;
 window.clock_in = clock_in;
 window.break_in = break_in;
 window.break_out = break_out;
