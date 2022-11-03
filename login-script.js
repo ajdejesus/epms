@@ -10,7 +10,7 @@ function auth () {
                 sessionStorage.setItem("id", value.Item.id.S)
                 window.location.href = "./dashboard.html"
             } else {
-                console.log("No match")
+                alert("No match")
             }
         },
 
