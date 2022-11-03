@@ -212,7 +212,7 @@ function verify_timecard_status() {
                     sub_panel.innerHTML = "Welcome back " + document.getElementById("emp-name").innerHTML + "!"
                     console.log("third if", sub_panel.innerHTML)
                 } else if (value.Item.clockout_hour != undefined) {                    
-                    clock.innerHTML = clock.innerHTML + " - " + value.Item.clockout_hour.S + ":" + value.Item.clockout_min.S
+                    clock.innerHTML = value.Item.clockin_hour.S + ":" + value.Item.clockin_min.S + " - " + value.Item.clockout_hour.S + ":" + value.Item.clockout_min.S
                     btnPanel1.style.display = "none"
                     btnPanel2.style.display = "none"
                     console.log("fourth if")
@@ -277,7 +277,19 @@ function load_workweek_info() {
 
     // const week_start_date = date.getDate() + date.getDay()
 
+    let start = date.getDate() - date.getDay()
+    let end = date.getDate() + (6 - date.getDay())
+
+    if (start < 0) {
+        let temp = date
+        temp.getMonth() = temp.getMonth() - 1
+        temp.getDate() = 
+        format_date(temp)
+    }
+
     week_info.innerHTML = f_date.month + " " + (date.getDate() - date.getDay()) + " - " + (date.getDate() + (6 - date.getDay()))
+
+
 }
 
 // function to load employee information, retrieves it from DynamoDB for display
