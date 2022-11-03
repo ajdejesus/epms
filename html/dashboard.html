@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>EPMS Dashboard</title>
+
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1224.0.min.js"></script>
+        <script type="text/javascript" src="../dashboard-scripts/main.js"></script>
+
+        <link rel="stylesheet" href="../css/dashboard_style.css">
+    </head>
+
+    <body>
+        <h1 class="banner">Employee Dashboard</h1>
+
+        <div class="info">
+            <div id="info-panel">
+                <h1>Clocked in at: <span id="clock"></span></h1>
+                <p id="sub-panel"></p>
+            </div>
+
+            <div id="btn-panel1">
+                <button type="button" id="clock_in_btn" class="btn-style" onclick="clock_in()">Clock In</button>
+            </div>
+
+            <div id="btn-panel2">
+                <button type="button" id="clock-out-btn" class="btn-style" onclick="clock_out()">Clock out</button>
+                <br>
+                <button type="button" id="start-break-btn" class="btn-style" onclick="break_in()">Take a break</button>
+                <button type="button" id="end-break-btn" class="btn-style" onclick="break_out()">Finish break</button>
+            </div>
+        </div>
+
+        <div id="no-edit-info" class="info-2">
+            <h2>Employee Info:</h2>
+            <ul>
+                <li>Employee ID: <span id="emp-id"></span></li>
+                <li>Employee Name: <span id="emp-name"></span></li>
+                <li>Department: <span id="dept-info"></span></li>
+            </ul>
+            <button type="button" id="edit-btn" class="btn-style">Edit</button>
+        </div>
+
+        <div id="edit-info" class="info-2">
+            <h2>Edit Employee Info:</h2>
+            <ul>
+                <li>Employee ID: <input type="text" name="id-input" id="id-input"></li>
+                <li>Employee Name: <input type="text" name="name-input" id="name-input"></li>
+                <li>Department: <input type="text" name="dept-input" id="dept-input"></li>
+            </ul>
+            <button type="button" id="update-btn" class="btn-style">Update</button>
+            <button type="button" id="done-btn" class="btn-style">Done</button>
+        </div>
+
+        <div class="info-2">
+            <h2>Work Week: <span id="work-week"></span></h2>
+            <ul>
+                <li>Today's Earnings: <span id="todays-earning"></span></li>
+                <!-- <li>Overtime Earnings: <span id="overtime"></span></li> -->
+                <li>Week's Earnings: <span id="weeks-earning"></span></li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            load_everything();
+        </script>
+    </body>
+</html>

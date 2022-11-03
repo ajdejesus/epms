@@ -1,0 +1,24 @@
+{
+  "name": "proposal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "polly.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.183.0",
+    "@aws-sdk/client-dynamodb": "^3.183.0",
+    "@aws-sdk/client-polly": "^3.183.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.183.0",
+    "@aws-sdk/polly-request-presigner": "^3.183.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}

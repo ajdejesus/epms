@@ -1,0 +1,30 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #A5F0C5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.head {
+    background-color: #06373A;
+    color: white;
+    height: 10vh;
+    margin-bottom: 5vh;
+    text-align: center;
+}
+
+.login-box {
+    background-color: #159947;
+    margin: auto;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    width: 25vw;
+    height: 60vh;
+    border-radius: 5px;
+    border: solid 3px #06373A;
+}
+
+.login-box * {
+    margin: 5%;
+}

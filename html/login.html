@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="../css/login_style.css">
+
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1224.0.min.js"></script>
+        <script type="text/javascript" src="../login-scripts/main.js"></script>
+
+        <title>Login</title>
+    </head>
+
+    <body>
+        <h1 class="head">Sign In</h1>
+
+        <div class="login-box">
+            <div>
+                <label for="usr">First Name:</label>
+                <input type="text" name="usr" id="usr" required>
+            </div>
+            <div>
+                <label for="pwd">Last name:</label>
+                <input type="text" name="pwd" id="pwd" required>
+            </div>
+            <div>
+                <button onclick="auth()">Search</button>
+            </div>
+        </div>
+
+        <!-- <table class="login-box">
+            <tr>
+                <td>
+                    <label for="emp-id">ID:</label>
+                </td>
+                <td>
+                    <input type="text" name="emp-id" id="emp-id">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fname">First Name:</label>
+                </td>
+                <td>
+                    <input type="text" name="fname" id="fname">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="lname">Last Name:</label>
+                </td>
+                <td>
+                    <input type="text" name="lname" id="lname">
+                </td>
+            </tr>
+        </table> -->
+    </body>
+</html>
