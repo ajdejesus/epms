@@ -2,6 +2,7 @@ const { get_item } = require("./get-item.js");
 const { put_item } = require("./write-item.js");
 const { update_item } = require("./update-item.js");
 const { delete_item } = require("./delete-item.js");
+const { home, signOut } = require('./navbar.js');
 
 // helper function to format units of time from the "Date" object
 
@@ -261,9 +262,9 @@ function load_workweek_info() {
                 const break_total = (hour_breakout + min_breakout) - (hour_breakin + min_breakin);
 
                 today_hours = (hour_out + min_out) - (hour_in + min_in) - break_total;
-
+                console.log(today_hours);
                 if ((sessionStorage.getItem('schedule') == 'pt' && today_hours >= 4) || (sessionStorage.getItem('schedule') == 'ft' && today_hours >= 8)) {
-                    console.log('inside the if')
+                    // console.log('inside the if line 267')
                     return get_item(table = "rate-info", key = { id: { S: sessionStorage.getItem("id") } });
                 }
                 return null;
@@ -278,12 +279,19 @@ function load_workweek_info() {
                 const rate = +value.Item.rate.N;
                 const pay = rate * today_hours;
 
-                // console.log(pay, rate, today_hours)
-
                 todays_earnings.innerHTML = "$" + pay.toFixed(2);
+                return update_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } }, expression_update = "set total_pay = :p", expression_attributes = { ":p": { S: "$" + pay.toFixed(2) } })
             } else {
                 console.log('Not enough hours');
             }
+            return null;
+        },
+        error => {
+            console.log(error);
+        }
+    ).then(
+        value => {
+            console.log("Added total pay");
         },
         error => {
             console.log(error);
@@ -330,19 +338,13 @@ function load_emp_info() {
             id.innerHTML = value.Item.id.S;
             name.innerHTML = value.Item.fname.S + " " + value.Item.lname.S;
             dept.innerHTML = value.Item.department.S;
-            sub_panel.innerHTML = "Welcome to your shift " + value.Item.fname.S + "!";
+            sub_panel.innerHTML = "Welcome to your shift, " + value.Item.fname.S + "!";
         },
 
         function (error) {
             console.log("Error:", error);
         }
     );
-}
-
-function load_everything() {
-    load_emp_info();
-    load_workweek_info();
-    verify_timecard_status();
 }
 
 function delete_user() {
@@ -359,9 +361,43 @@ function delete_user() {
     )
 }
 
+function navWeeklyView() {
+    window.location.href = './week.html';
+}
+
+function updateEmpInfo() {
+    update_item(table = "emp-info", key = { id: { S: sessionStorage.getItem("id") }, username: { S: sessionStorage.getItem('username') } }, expression_update = "set fname = :f, lname = :l, department = :d", expression_attributes = {
+        ":f": { S: document.getElementById('fname-input').value }, ":l": { S: document.getElementById('lname-input').value }, ":d": {
+            S: document.getElementById('dept-input').value
+        }
+    })
+}
+
+let active = false
+
+function toggleEditPanel() {
+    active = !active;
+    if (active) {
+        document.getElementById('edit-panel').classList.add('active-edit-panel');
+        document.getElementById('layer').classList.add('layer-active');
+    } else {
+        document.getElementById('edit-panel').classList.remove('active-edit-panel');
+        document.getElementById('layer').classList.remove('layer-active');
+    }
+}
+
+load_emp_info();
+load_workweek_info();
+verify_timecard_status();
+
+window.toggleEditPanel = toggleEditPanel;
+window.navWeeklyView = navWeeklyView;
 window.delete_user = delete_user;
 window.clock_in = clock_in;
 window.break_in = break_in;
 window.break_out = break_out;
 window.clock_out = clock_out;
 window.load_everything = load_everything;
+window.signOut = signOut;
+window.home = home;
+window.updateEmpInfo = updateEmpInfo;

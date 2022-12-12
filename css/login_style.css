@@ -1,3 +1,5 @@
+@import './dashboard_style.css';
+
 body {
     margin: 0px;
     padding: 0px;
@@ -31,19 +33,4 @@ h1 {
 
 .login-box * {
     margin: 2%;
-}
-
-.btn-style {
-    background-color: #93D6B0;
-    border: solid black 2px;
-    padding: 3px 5px;
-    font-size: 75%;
-    width: 10vw;
-    height: 5vh;
-    margin: 10px;
-    border-radius: 5px;
-}
-
-.btn-style:hover {
-    background-color: #93d6b0a1;
 }

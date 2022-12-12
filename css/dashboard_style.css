@@ -1,11 +1,91 @@
 body {
     margin: 0;
+    margin-top: 10rem;
     background-color: #A5F0C5;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1, h2, h3 {
+.dashboard-grid {
+    display: grid;
+    margin-top: 10rem;
+    grid-template-areas: 'info info' 'info-2 info-3';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    z-index: 3;
+}
+
+.edit-panel {
+    background-color: #159947;
+    border: 0.1rem solid black;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    display: grid;
+    color: white;
+    justify-content: center;
+    margin: 45vw;
+    margin-top: -40rem;
+    height: auto;
+    width: auto;
+    transition: all 0.5s;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+}
+
+.active-edit-panel {
+    opacity: 1;
+    margin-top: 5rem
+}
+
+.layer {
+    /* display: none; */
+    position: fixed;
+    background-color: black;
+    opacity: 0;
+    transition: all 0.5s;
+    height: 0;
     margin: 0;
+    margin-top: -10rem;
+    width: 100vw;
+    z-index: 5;
+}
+
+.layer-active {
+    /* display: block; */
+    height: 100vh;
+    opacity: 0.6;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+.navbar {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    /* padding: 0.5rem 0rem 0.5rem 0rem; */
+    background-color: #0d5a5e;
+}
+
+.navbar li {
+    padding: 0.5rem;
+    transition: all 0.2s;
+    font-size: 1.2rem;
+    cursor: default;
+    /* margin-left: 1rem; */
+}
+
+.navbar li:hover {
+    background-color: #06373A;
+    transform: scale(1.1);
+    border-radius: 0.5rem;
+}
+
+.info_panel {
+    grid-area: info_panel;
 }
 
 #info-panel {
@@ -15,9 +95,9 @@ h1, h2, h3 {
 }
 
 #btn-panel1 {
-    float: right;
+    /* float: right;
     margin: 40px;
-    align-content: center;
+    align-content: center; */
 }
 
 #btn-panel2 {
@@ -26,6 +106,11 @@ h1, h2, h3 {
     margin: 15px;
     align-content: center;
     vertical-align: middle;
+}
+
+.btn-panel {
+    /* display: flex; */
+    grid-area: btn-panel;
 }
 
 #edit-info {
@@ -38,38 +123,49 @@ h1, h2, h3 {
 
 .btn-style {
     background-color: #93D6B0;
-    border: solid black 2px;
-    padding: 3px 5px;
-    font-size: 100%;
-    width: 10vw;
-    height: 5vh;
-    margin: 10px;
-    border-radius: 5px;
+    border: solid black 0.1rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    width: auto;
+    height: auto;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
 }
 
 .btn-style:hover {
+    transform: scale(1.1);
     background-color: #93d6b0a1;
 }
 
 .banner {
+    position: fixed;
+    top: 0;
     width: 100vw;
     background-color: #06373A;
     text-align: center;
-    font-size: 200%;
+    font-size: 2rem;
     color: white;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
+    z-index: 2;
+    /* padding-bottom: 0.5rem; */
+}
+
+.banner h1 {
+    padding-bottom: 0.5rem;
 }
 
 .info {
-    /* height: max(25vh); */
+    box-shadow: 0.05rem 0.1rem 0.1rem black;
+    grid-area: info;
+    display: grid;
+    grid-template-areas: 'info_panel btn-panel';
+    grid-template-columns: 1fr 1fr;
+    height: auto;
     background-color: #159947;
-    padding: 25px;
-    margin-top: 2vh; 
-    margin-left: 2.5vw;
-    margin-right: 2.5vw;
-    border: 1px solid black;
-    border-radius: 30px;
+    padding: 2rem;
+    margin: 1rem;
+    border: 0.1rem solid black;
+    border-radius: 1rem;
     color: white;
 }
 
@@ -77,14 +173,38 @@ h1, h2, h3 {
     list-style-type: none;
 }
 
-.info-2 { 
-    font-size: 150%;
-    margin-top: 2vh;
-    padding: 25px;
-    width: 43vw;
-    /* height: 35vh; */
+.info-2 {
+    box-shadow: 0.05rem 0.1rem 0.1rem black;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    justify-content: center;
+    grid-area: info-2;
+    font-size: 1.5rem;
+    margin: 2rem;
+    /* padding: 0.5rem; */
+    width: auto;
+    height: auto;
     background-color: #159947;
-    margin-left: 2.5vw;
+    /* margin-left: 2.5vw; */
+    border: 1px solid black;
+    border-radius: 30px;
+    color: white;
+    float: left;
+}
+
+.info-3 {
+    box-shadow: 0.05rem 0.1rem 0.1rem black;
+    grid-area: info-3;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 2rem;
+    /* padding: 0.5rem; */
+    width: auto;
+    height: auto;
+    background-color: #159947;
+    /* margin-left: 2.5vw; */
     border: 1px solid black;
     border-radius: 30px;
     color: white;

@@ -1,0 +1,55 @@
+@import './dashboard_style.css';
+
+.week-container {
+    align-self: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* padding: 2rem; */
+    background-color: #159947;
+    border: 0.2rem solid black;
+    margin: auto;
+    /* padding: 1rem; */
+    width: calc(100vw - 20rem);
+    height: calc(100vh - 15rem);
+    overflow: auto;
+    transition: all 0.5s;
+    border-radius: 1rem;
+}
+
+.day-container {
+    display: grid;
+    /* overflow: scroll; */
+    font-size: 1.4rem;
+    width: auto;
+    grid-template-areas: 'left-box middle-box right-box';
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 10rem;
+    background-color: #93d6b0a1;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.left-box {
+    grid-template-areas: left-box;
+}
+
+.center-box {
+    grid-template-areas: middle-box;
+}
+
+.right-box {
+    grid-template-areas: right-box;
+}
+
+.day-header {}
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+    /* margin: 0.5rem; */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #93d6b0a1;
+    border-radius: 0.25rem;
+}

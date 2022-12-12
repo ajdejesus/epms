@@ -27958,14 +27958,14 @@ module.exports = JSON.parse('{"name":"@aws-sdk/client-dynamodb","description":"A
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*****************************!*\
-  !*** ./dashboard-script.js ***!
-  \*****************************/
+/*!************************!*\
+  !*** ./week-script.js ***!
+  \************************/
 const { get_item } = __webpack_require__(/*! ./get-item.js */ "./get-item.js");
 const { put_item } = __webpack_require__(/*! ./write-item.js */ "./write-item.js");
 const { update_item } = __webpack_require__(/*! ./update-item.js */ "./update-item.js");
 const { delete_item } = __webpack_require__(/*! ./delete-item.js */ "./delete-item.js");
-const { home, signOut } = __webpack_require__(/*! ./navbar.js */ "./navbar.js");
+const { home, signOut } = __webpack_require__(/*! ./navbar.js */ "./navbar.js")
 
 // helper function to format units of time from the "Date" object
 
@@ -28047,323 +28047,56 @@ function format_date(date) {
     return formatted_date;
 }
 
-// function will communicate with dynamodb to store clock in and clock out times
-// TODO it is a good idea to combine the clock in and clock out functions and seperate them with an if statement
-
-function clock_in() {
-    const date = new Date();
-    const f_date = format_date(date);
-    const f_time = format_time(date);
-    const clock = document.getElementById("clock");
-    const btnPanel1 = document.getElementById("btn-panel1");
-    const btnPanel2 = document.getElementById("btn-panel2");
-
-    const table_info = put_item(table = "clock-info", item = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date }, clockin_hour: { S: f_time.hours }, clockin_min: { S: f_time.minutes } })
-
-    table_info.then(
-        function (value) {
-            console.log("Added successfully");
-
-            clock.innerHTML = f_time.complete_time;
-
-            btnPanel1.style.display = "none";
-            btnPanel2.style.display = "inline-block";
-        },
-        function (error) {
-            console.log(error);
-        }
-    )
-}
-
-function break_in() {
-    const date = new Date();
-    const f_time = format_time(date);
-    const f_date = format_date(date);
-    const sub_panel = document.getElementById("sub-panel");
-    const start_break = document.getElementById("start-break-btn");
-    const end_break = document.getElementById("end-break-btn");
-
-    const table_info = update_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } }, expression_update = "set breakin_hour = :h, breakin_min = :m", expression_attributes = { ":h": { S: f_time.hours }, ":m": { S: f_time.minutes } });
-
-    table_info.then(
-        function (value) {
-            console.log("Added successfully\n", value.Item);
-
-            sub_panel.innerHTML = "Took your break at " + format_time.complete_time;
-            start_break.style.display = "none";
-            end_break.style.display = "inline-block";
-        },
-        function (error) {
-            console.log(error);
-        }
-    )
-}
-
-function break_out() {
-    const date = new Date();
-    const f_time = format_time(date);
-    const f_date = format_date(date);
-    const sub_panel = document.getElementById("sub-panel");
-    const start_break = document.getElementById("start-break-btn");
-    const end_break = document.getElementById("end-break-btn");
-
-    const table_info = update_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } }, expression_update = "set breakout_hour = :h, breakout_min = :m", expression_attributes = { ":h": { S: f_time.hours }, ":m": { S: f_time.minutes } });
-
-    table_info.then(
-        function (value) {
-            console.log("Added successfully\n", value.Item);
-
-            sub_panel.innerHTML = "Welcome back " + document.getElementById("emp-name").innerHTML + "!";
-            start_break.style.display = "inline-block";
-            end_break.style.display = "none";
-        },
-        function (error) {
-            console.log(error);
-        }
-    )
-}
-
-function clock_out() {
-    const date = new Date();
-    const f_time = format_time(date);
-    const f_date = format_date(date);
-    const clock = document.getElementById("clock");
-    const btnPanel1 = document.getElementById("btn-panel1");
-    const btnPanel2 = document.getElementById("btn-panel2");
-
-    const table_info = update_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } }, expression_update = "set clockout_hour = :h, clockout_min = :m", expression_attributes = { ":h": { S: f_time.hours }, ":m": { S: f_time.minutes } });
-
-    table_info.then(
-        function (value) {
-            console.log("Added successfully\n", value.Item);
-            clock.innerHTML = clock.innerHTML + " - " + f_time.complete_time;
-
-            btnPanel1.style.display = "none";
-            btnPanel2.style.display = "none";
-        },
-        function (error) {
-            console.log(error);
-        }
-    )
-}
-
-// function to avoid the webpage from resetting after refreshing  or leaving the page
-
-function verify_timecard_status() {
-    console.log("Verifying timecard status...")
-
-    const date = new Date();
-    const f_date = format_date(date);
-    const clock = document.getElementById("clock");
-    const sub_panel = document.getElementById("sub-panel");
-    const btnPanel1 = document.getElementById("btn-panel1");
-    const btnPanel2 = document.getElementById("btn-panel2");
-
-    const table_info = get_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } });
-
-    table_info.then(
-        function (value) {
-            // console.log('clock-info:', value)
-            if (value.Item.clockin_hour != undefined) {
-                clock.innerHTML = value.Item.clockin_hour.S + ":" + value.Item.clockin_min.S;
-                btnPanel1.style.display = "none";
-                btnPanel2.style.display = "inline-block";
-                // console.log("first if");
-
-                if (value.Item.breakin_hour != undefined && value.Item.breakout_hour == undefined) {
-                    sub_panel.innerHTML = "Took your break at " + value.Item.breakin_hour.S;
-                    console.log("second if", sub_panel.innerHTML);
-                } else if (value.Item.breakin_hour != undefined && value.Item.breakout_hour != undefined && value.Item.clockout_hour == undefined) {
-                    sub_panel.innerHTML = "Welcome back " + document.getElementById("emp-name").innerHTML + "!";
-                    console.log("third if", sub_panel.innerHTML);
-                } else if (value.Item.clockout_hour != undefined) {
-                    clock.innerHTML = value.Item.clockin_hour.S + ":" + value.Item.clockin_min.S + " - " + value.Item.clockout_hour.S + ":" + value.Item.clockout_min.S;
-                    btnPanel1.style.display = "none";
-                    btnPanel2.style.display = "none";
-                    console.log("fourth if");
-                }
-            }
-        },
-        function (error) {
-            console.log(error);
-        }
-    );
-}
-
-// functions loads work week information and pay rate
-// TODO fix the work week display so it does not show dates over 30 or 31
-
-function load_workweek_info() {
-    console.log("Loading work week info...");
-
-    const date = new Date();
-    const f_date = format_date(date);
-    const week_info = document.getElementById("work-week");
-    const todays_earnings = document.getElementById("todays-earning");
-    // const overtime = document.getElementById("overtime");
-    const weeks_earnings = document.getElementById("weeks-earning");
-    let today_hours = 0;
-
-    const table_info = get_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } });
-
-    table_info.then(
-        value => {
-            // console.log('clock-info: ', value)
-            // this function will create time variables for the rate to be calculated
-            if (value.Item.clockin_hour != undefined && value.Item.clockout_hour != undefined) {
-                const hour_in = +value.Item.clockin_hour.S;
-                const hour_out = +value.Item.clockout_hour.S;
-                const hour_breakin = +value.Item.breakin_hour.S;
-                const hour_breakout = +value.Item.breakout_hour.S;
-                const min_breakin = +value.Item.breakin_min.S / 60;
-                const min_breakout = +value.Item.breakout_min.S / 60;
-                const min_in = +value.Item.clockin_min.S / 60;
-                const min_out = +value.Item.clockout_min.S / 60;
-
-                console.log(hour_breakin, min_breakin, hour_breakout, min_breakout);
-
-                const break_total = (hour_breakout + min_breakout) - (hour_breakin + min_breakin);
-
-                today_hours = (hour_out + min_out) - (hour_in + min_in) - break_total;
-                console.log(today_hours);
-                if ((sessionStorage.getItem('schedule') == 'pt' && today_hours >= 4) || (sessionStorage.getItem('schedule') == 'ft' && today_hours >= 8)) {
-                    // console.log('inside the if line 267')
-                    return get_item(table = "rate-info", key = { id: { S: sessionStorage.getItem("id") } });
-                }
-                return null;
-            }
-        },
-        error => {
-            console.log(error);
-        }
-    ).then(
-        value => {
-            if (value != null) {
-                const rate = +value.Item.rate.N;
-                const pay = rate * today_hours;
-
-                todays_earnings.innerHTML = "$" + pay.toFixed(2);
-                return update_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: f_date.complete_date } }, expression_update = "set total_pay = :p", expression_attributes = { ":p": { S: "$" + pay.toFixed(2) } })
-            } else {
-                console.log('Not enough hours');
-            }
-            return null;
-        },
-        error => {
-            console.log(error);
-        }
-    ).then(
-        value => {
-            console.log("Added total pay");
-        },
-        error => {
-            console.log(error);
-        }
-    );
-
-    // const rate_info = get_item(table = "rate-info", key = { id: { S: sessionStorage.getItem("id") } });
-
-    // rate_info.then(
-    //     function (value) {
-    //         // this function will display earnings information
-    //         const rate = +value.Item.rate.N;
-    //         const pay = rate * today_hours;
-
-    //         // console.log(pay, rate, today_hours)
-
-    //         todays_earnings.innerHTML = "$" + pay.toFixed(2);
-    //     },
-    //     function (error) {
-    //         console.log(error);
-    //     }
-    // )
-
-    // console.log(week_info);
-    week_info.innerHTML = f_date.month + " " + (date.getDate() - date.getDay()) + " - " + (date.getDate() + (6 - date.getDay()));
-}
-
-// function to load employee information, retrieves it from DynamoDB for display
-
-function load_emp_info() {
-    console.log("Loading employee information...");
-
-    const id = document.getElementById("emp-id");
-    const name = document.getElementById("emp-name");
-    const dept = document.getElementById("dept-info");
-    const sub_panel = document.getElementById("sub-panel");
-
-    const table_info = get_item(table = "emp-info", key = { id: { S: sessionStorage.getItem("id") }, username: { S: sessionStorage.getItem("username") } });
-
-    table_info.then(
-        function (value) {
-            // console.log('emp-info: ', value)
-            sessionStorage.setItem('schedule', value.Item.schedule.S);
-            id.innerHTML = value.Item.id.S;
-            name.innerHTML = value.Item.fname.S + " " + value.Item.lname.S;
-            dept.innerHTML = value.Item.department.S;
-            sub_panel.innerHTML = "Welcome to your shift, " + value.Item.fname.S + "!";
-        },
-
-        function (error) {
-            console.log("Error:", error);
-        }
-    );
-}
-
-function delete_user() {
-    const table_info = delete_item(table = "login-info", key = { username: { S: sessionStorage.getItem("username") } });
-
-    table_info.then(
-        function (value) {
-            console.log(value);
-            window.location.href = "./login.html";
-        },
-        function (error) {
-            console.log(error);
-        }
-    )
-}
-
-function navWeeklyView() {
-    window.location.href = './week.html';
-}
-
-function updateEmpInfo() {
-    update_item(table = "emp-info", key = { id: { S: sessionStorage.getItem("id") }, username: { S: sessionStorage.getItem('username') } }, expression_update = "set fname = :f, lname = :l, department = :d", expression_attributes = {
-        ":f": { S: document.getElementById('fname-input').value }, ":l": { S: document.getElementById('lname-input').value }, ":d": {
-            S: document.getElementById('dept-input').value
-        }
-    })
-}
-
-let active = false
-
-function toggleEditPanel() {
-    active = !active;
-    if (active) {
-        document.getElementById('edit-panel').classList.add('active-edit-panel');
-        document.getElementById('layer').classList.add('layer-active');
-    } else {
-        document.getElementById('edit-panel').classList.remove('active-edit-panel');
-        document.getElementById('layer').classList.remove('layer-active');
+function displayDates() {
+    const date_array = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7'];
+    for (let i = 0; i < date_array.length; i++) {
+        // console.log(date_array[i]);
+        document.getElementById(date_array[i]).innerHTML = f_date.month + ' ' + (date.getDate() - date.getDay() + i).toString();
     }
 }
 
-load_emp_info();
-load_workweek_info();
-verify_timecard_status();
+const date = new Date();
+const f_date = format_date(date);
 
-window.toggleEditPanel = toggleEditPanel;
-window.navWeeklyView = navWeeklyView;
-window.delete_user = delete_user;
-window.clock_in = clock_in;
-window.break_in = break_in;
-window.break_out = break_out;
-window.clock_out = clock_out;
-window.load_everything = load_everything;
-window.signOut = signOut;
+const day_list = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+get_item(table = "rate-info", key = { id: { S: sessionStorage.getItem("id") } }).then(
+    value => {
+        const rate = +value.Item.rate.N;
+        for (let i = 0; i < day_list.length; i++) {
+            const day = f_date.month + ' ' + (date.getDate() - date.getDay() + i).toString() + ', ' + f_date.year;
+            // console.log(day);
+            get_item(table = "clock-info", key = { id: { S: sessionStorage.getItem("id") }, date: { S: day } }).then(
+                value => {
+                    if (value.Item != undefined) {
+                        const hour_in = +value.Item.clockin_hour.S;
+                        const hour_out = +value.Item.clockout_hour.S;
+                        const hour_breakin = +value.Item.breakin_hour.S;
+                        const hour_breakout = +value.Item.breakout_hour.S;
+                        const min_breakin = +value.Item.breakin_min.S / 60;
+                        const min_breakout = +value.Item.breakout_min.S / 60;
+                        const min_in = +value.Item.clockin_min.S / 60;
+                        const min_out = +value.Item.clockout_min.S / 60;
+                        const total_hours = ((hour_out + min_out) - (hour_in + min_in)) - ((hour_breakout + min_breakout) - (hour_breakin + min_breakin))
+
+                        document.getElementById('earned-' + day_list[i]).innerHTML = (total_hours * rate).toFixed(2);
+                        document.getElementById('clockIn-' + day_list[i]).innerHTML = value.Item.clockin_hour.S + ':' + value.Item.clockin_min.S;
+                        document.getElementById('clockOut-' + day_list[i]).innerHTML = value.Item.clockout_hour.S + ':' + value.Item.clockout_min.S;
+                        document.getElementById('totalHours-' + day_list[i]).innerHTML = total_hours.toFixed(1);
+                    }
+                },
+                error => {
+                    console.log(error);
+                }
+            )
+        }
+    }
+)
+
+console.log('js loaded');
+displayDates();
 window.home = home;
-window.updateEmpInfo = updateEmpInfo;
+window.signOut = signOut;
 
 })();
 

@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="../css/login_style.css">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1224.0.min.js"></script>
-        <script type="text/javascript" src="../login-scripts/main.js"></script>
+    <link rel="stylesheet" href="../css/login_style.css">
 
-        <title>Login</title>
-    </head>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1224.0.min.js"></script>
+    <script type="text/javascript" src="../login-scripts/main.js"></script>
 
-    <body>
-        <h1 class="head">Sign In</h1>
+    <title>Login</title>
+</head>
 
-        <div class="login-box">
-            <div>
-                <label for="usr">Username:</label>
-                <input type="text" name="usr" id="usr" required>
-            </div>
-            <div>
-                <label for="pwd">Password:</label>
-                <input type="password" name="pwd" id="pwd" required>
-            </div>
-            
-            <div>
-                <button type="button" class="btn-style" onclick="auth()">Log In</button>
-            </div>
+<body>
+    <h1 class="head">Sign In</h1>
+
+    <div class="login-box">
+        <div>
+            <label for="usr">Username:</label>
+            <input type="text" name="usr" id="usr" required>
         </div>
-    </body>
+        <div>
+            <label for="pwd">Password:</label>
+            <input type="password" name="pwd" id="pwd" required>
+        </div>
+
+        <div>
+            <button type="button" class="btn-style" onclick="auth()">Log In</button>
+        </div>
+    </div>
+</body>
+
 </html>

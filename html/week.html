@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Edit Information</title>
+
+    <link rel="stylesheet" href="../css/week_style.css">
+</head>
+
+<body>
+    <div class="banner">
+        <h1>Weekly Glance</h1>
+        <ul class="navbar">
+            <li onclick="home()">Home</li>
+            <li onclick="signOut()">Sign Out</li>
+        </ul>
+    </div>
+
+    <div class="week-container">
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Sunday</h1>
+                <p id="day1"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-sunday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-sunday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-sunday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-sunday"></span></h1>
+            </div>
+        </div>
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Monday</h1>
+                <p id="day2"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-monday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-monday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-monday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-monday"></span></h1>
+            </div>
+            <h2 class="date-header"></h2>
+        </div>
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Tuesday</h1>
+                <p id="day3"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-tuesday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-tuesday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-tuesday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-tuesday"></span></h1>
+            </div>
+            <h2 class="date-header"></h2>
+        </div>
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Wednesday</h1>
+                <p id="day4"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-wednesday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-wednesday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-wednesday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-wednesday"></span></h1>
+            </div>
+            <h2 class="date-header"></h2>
+        </div>
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Thursday</h1>
+                <p id="day5"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-thursday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-thursday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-thursday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-thursday"></span></h1>
+            </div>
+            <h2 class="date-header"></h2>
+        </div>
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Friday</h1>
+                <p id="day6"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-friday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-friday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-friday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-friday"></span></h1>
+            </div>
+            <h2 class="date-header"></h2>
+        </div>
+        <div class="day-container">
+            <div class="left-box">
+                <h1>Saturday</h1>
+                <p id="day7"></p>
+            </div>
+            <div class="middle-box">
+                <ul>
+                    <li>Earned: <span id="earned-saturday"></span></li>
+                    <li>Clocked-in: <span id="clockIn-saturday"></span></li>
+                    <li>Clocked-out: <span id="clockOut-saturday"></span></li>
+                </ul>
+            </div>
+            <div class="right-box">
+                <h1>Total hours worked: <span id="totalHours-saturday"></span></h1>
+            </div>
+            <h2 class="date-header"></h2>
+        </div>
+    </div>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1224.0.min.js"></script>
+    <script type="text/javascript" src="../week-scripts/main.js"></script>
+</body>
+
+</html>
