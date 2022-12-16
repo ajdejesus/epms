@@ -28037,14 +28037,24 @@ function format_date(date) {
             break;
     };
 
-    formatted_date = {
+    return {
         month: month,
         day: date.getDate().toString(),
         year: date.getFullYear().toString(),
         complete_date: month + " " + date.getDate().toString() + ", " + date.getFullYear().toString()
     };
+}
 
-    return formatted_date;
+function toggleEditPanel(selectedDay = '') {
+    currentDay = selectedDay;
+    active = !active;
+    if (active) {
+        document.getElementById('edit-panel').classList.add('active-edit-panel');
+        document.getElementById('layer').classList.add('layer-active');
+    } else {
+        document.getElementById('edit-panel').classList.remove('active-edit-panel');
+        document.getElementById('layer').classList.remove('layer-active');
+    }
 }
 
 function displayDates() {
@@ -28055,10 +28065,73 @@ function displayDates() {
     }
 }
 
+function editTime() {
+    const clockinInput = document.getElementById('clockin-input');
+    const clockoutInput = document.getElementById('clockout-input');
+    const breakinInput = document.getElementById('breakin-input');
+    const breakoutInput = document.getElementById('breakout-input');
+    const clockInHour = clockinInput.value.substr(-5, 2);
+    const clockInMin = clockinInput.value.substr(-2, 2);
+    const breakInHour = breakinInput.value.substr(-5, 2);
+    const breakInMin = breakinInput.value.substr(-2, 2);
+    const breakOutHour = breakoutInput.value.substr(-5, 2);
+    const breakOutMin = breakoutInput.value.substr(-2, 2);
+    const clockOutHour = clockoutInput.value.substr(-5, 2);
+    const clockOutMin = clockoutInput.value.substr(-2, 2);
+
+    const editDate = f_date.month + " " + (date.getDate() - (date.getDay() - currentDay) + ", " + date.getFullYear())
+    console.log(editDate);
+
+    get_item('clock-info', { id: { S: sessionStorage.getItem('id') }, date: { S: editDate } }).then(
+        value => {
+            if (value.Item != undefined) {
+                console.log('updated...');
+                update_item('clock-info', { id: { S: sessionStorage.getItem("id") }, date: { S: editDate } }, 'set clockin_hour = :inh, clockin_min = :inm, breakin_hour = :bih, breakin_min = :bim, breakout_hour = :boh, breakout_min = :bom, clockout_hour = :outh, clockout_min = :outm', {
+                    ":inh": { S: clockInHour }, ":inm": { S: clockInMin }, ":outh": { S: clockOutHour }, ":outm": { S: clockOutMin }, ":bih": { S: breakInHour }, ":bim": { S: breakInMin }, ":boh": { S: breakOutHour }, ":bom": { S: breakOutMin }
+                }).then(
+                    value => {
+                        console.log(value);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            } else {
+                console.log('added...');
+                put_item('clock-info', { id: { S: sessionStorage.getItem("id") }, date: { S: editDate }, clockin_hour: { S: clockInHour }, clockin_min: { S: clockInMin }, clockout_hour: { S: clockOutHour }, clockout_min: { S: clockOutMin }, breakin_hour: { S: breakInHour }, breakin_min: { S: breakInMin }, breakout_hour: { S: breakOutHour }, breakout_min: { S: breakOutMin } }).then(
+                    value => {
+                        console.log(value);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
+        },
+        error => {
+            console.log(error);
+        }
+    )
+}
+
+function deleteEntry(editDate) {
+    const selectedDate = f_date.month + " " + (date.getDate() - (date.getDay() - editDate)).toString() + ", " + date.getFullYear();
+    console.log(selectedDate);
+    delete_item('clock-info', { id: { S: sessionStorage.getItem('id') }, date: { S: selectedDate } }).then(
+        value => {
+            console.log(value);
+        },
+        error => {
+            console.log(error);
+        }
+    )
+}
+
 const date = new Date();
 const f_date = format_date(date);
-
 const day_list = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+let currentDay = '';
+let active = false;
 
 get_item(table = "rate-info", key = { id: { S: sessionStorage.getItem("id") } }).then(
     value => {
@@ -28093,11 +28166,13 @@ get_item(table = "rate-info", key = { id: { S: sessionStorage.getItem("id") } })
     }
 )
 
-console.log('js loaded');
 displayDates();
 window.home = home;
 window.signOut = signOut;
-
+window.editTime = editTime;
+window.toggleEditPanel = toggleEditPanel;
+window.deleteEntry = deleteEntry;
+console.log('js loaded');
 })();
 
 /******/ })()

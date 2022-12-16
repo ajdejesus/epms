@@ -11,6 +11,18 @@
 </head>
 
 <body>
+    <div id="layer" class="layer"></div>
+    <div class="edit-panel" id="edit-panel">
+        <h2>Edit Schedule:</h2>
+        <ul>
+            <li>Clock-in: <input type="datetime-local" name="clockin-input" id="clockin-input"></li>
+            <li>Break-in: <input type="datetime-local" name="breakin-input" id="breakin-input"></li>
+            <li>Break-in: <input type="datetime-local" name="breakout-input" id="breakout-input"></li>
+            <li>Clock-out: <input type="datetime-local" name="clockout-input" id="clockout-input"></li>
+        </ul>
+        <button type="button" id="update-btn" class="btn-style" onclick="editTime()">Update</button>
+        <button type="button" id="done-btn" class="btn-style" onclick="toggleEditPanel()">Exit</button>
+    </div>
     <div class="banner">
         <h1>Weekly Glance</h1>
         <ul class="navbar">
@@ -34,6 +46,8 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-sunday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-sunday" onclick="toggleEditPanel(0)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-sunday" onclick="deleteEntry(0)">Delete</button>
             </div>
         </div>
         <div class="day-container">
@@ -50,6 +64,8 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-monday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-monday" onclick="toggleEditPanel(1)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-monday" onclick="deleteEntry(1)">Delete</button>
             </div>
             <h2 class="date-header"></h2>
         </div>
@@ -67,6 +83,10 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-tuesday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-tuesday"
+                    onclick="toggleEditPanel(2)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-tuesday"
+                    onclick="deleteEntry(2)">Delete</button>
             </div>
             <h2 class="date-header"></h2>
         </div>
@@ -84,6 +104,10 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-wednesday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-wednesday"
+                    onclick="toggleEditPanel(3)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-wednesday"
+                    onclick="deleteEntry(3)">Delete</button>
             </div>
             <h2 class="date-header"></h2>
         </div>
@@ -101,6 +125,10 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-thursday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-thursday"
+                    onclick="toggleEditPanel(4)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-thursday"
+                    onclick="deleteEntry(4)">Delete</button>
             </div>
             <h2 class="date-header"></h2>
         </div>
@@ -118,6 +146,8 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-friday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-friday" onclick="toggleEditPanel(5)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-friday" onclick="deleteEntry(5)">Delete</button>
             </div>
             <h2 class="date-header"></h2>
         </div>
@@ -135,6 +165,10 @@
             </div>
             <div class="right-box">
                 <h1>Total hours worked: <span id="totalHours-saturday"></span></h1>
+                <button type="button" class="btn-style editTimeButton-saturday"
+                    onclick="toggleEditPanel(6)">Edit</button>
+                <button type="button" class="btn-style deleteTimeButton-saturday"
+                    onclick="deleteEntry(6)">Delete</button>
             </div>
             <h2 class="date-header"></h2>
         </div>

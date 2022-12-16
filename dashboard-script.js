@@ -397,7 +397,6 @@ window.clock_in = clock_in;
 window.break_in = break_in;
 window.break_out = break_out;
 window.clock_out = clock_out;
-window.load_everything = load_everything;
 window.signOut = signOut;
 window.home = home;
 window.updateEmpInfo = updateEmpInfo;

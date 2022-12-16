@@ -159,7 +159,7 @@ h3 {
     grid-area: info;
     display: grid;
     grid-template-areas: 'info_panel btn-panel';
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
     height: auto;
     background-color: #159947;
     padding: 2rem;
